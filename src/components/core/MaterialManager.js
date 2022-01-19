@@ -320,6 +320,12 @@ const textFragment = `
 		return max(min(r, g), min(max(r, g), b));
 	}
 
+    float tap(vec2 offsetUV, float _Bias) {
+        vec4 textureSample = texture(u_texture, offsetUV, _Bias);
+        float sigDist = median( textureSample.r, textureSample.g, textureSample.b );
+        return sigDist;
+    }
+
 	void main() {
 
 #ifdef USE_RGSS
@@ -331,26 +337,26 @@ const textFragment = `
         // rotated grid uv offsets
         vec2 uvOffsets = vec2(0.125, 0.375);
         vec2 offsetUV = vec2(0.0, 0.0);
-        float _Bias = -0.33;
+        float _Bias = -0.5;
 
         // supersampled using 2x2 rotated grid
-        vec4 col = vec4(0.0);
+        float sigDist = 0.0;
         offsetUV.xy = vUv + uvOffsets.x * dx + uvOffsets.y * dy;
-        col += texture(u_texture, offsetUV, _Bias);
+        sigDist += tap(offsetUV, _Bias);
         offsetUV.xy = vUv - uvOffsets.x * dx - uvOffsets.y * dy;
-        col += texture(u_texture, offsetUV, _Bias);
+        sigDist += tap(offsetUV, _Bias);
         offsetUV.xy = vUv + uvOffsets.y * dx - uvOffsets.x * dy;
-        col += texture(u_texture, offsetUV, _Bias);
+        sigDist += tap(offsetUV, _Bias);
         offsetUV.xy = vUv - uvOffsets.y * dx + uvOffsets.x * dy;
-        col += texture(u_texture, offsetUV, _Bias);
-        col *= 0.25;
+        sigDist += tap(offsetUV, _Bias);
+        sigDist *= 0.25;
+        sigDist -= 0.5;
 
-        vec3 textureSample = col.rgb;
 #else
         vec3 textureSample = texture2D( u_texture, vUv ).rgb;
+        float sigDist = median( textureSample.r, textureSample.g, textureSample.b ) - 0.5;
 #endif
 
-		float sigDist = median( textureSample.r, textureSample.g, textureSample.b ) - 0.5;
 		float alpha = clamp( sigDist / fwidth( sigDist ) + 0.5, 0.0, 1.0 );
 		alpha = min( alpha, u_opacity );
 		
