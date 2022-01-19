@@ -228,6 +228,9 @@ export default function MaterialManager( Base = class {} ) {
                 fragmentShader: textFragment,
                 extensions: {
                     derivatives: true
+                },
+                defines: {
+                    USE_RGSS: true,
                 }
             })
 
@@ -319,7 +322,34 @@ const textFragment = `
 
 	void main() {
 
-		vec3 textureSample = texture2D( u_texture, vUv ).rgb;
+#ifdef USE_RGSS
+        // shader-based supersampling based on https://bgolus.medium.com/sharper-mipmapping-using-shader-based-supersampling-ed7aadb47bec
+        // per pixel partial derivatives
+        vec2 dx = dFdx(vUv);
+        vec2 dy = dFdy(vUv);
+
+        // rotated grid uv offsets
+        vec2 uvOffsets = vec2(0.125, 0.375);
+        vec2 offsetUV = vec2(0.0, 0.0);
+        float _Bias = -0.33;
+
+        // supersampled using 2x2 rotated grid
+        vec4 col = vec4(0.0);
+        offsetUV.xy = vUv + uvOffsets.x * dx + uvOffsets.y * dy;
+        col += texture(u_texture, offsetUV, _Bias);
+        offsetUV.xy = vUv - uvOffsets.x * dx - uvOffsets.y * dy;
+        col += texture(u_texture, offsetUV, _Bias);
+        offsetUV.xy = vUv + uvOffsets.y * dx - uvOffsets.x * dy;
+        col += texture(u_texture, offsetUV, _Bias);
+        offsetUV.xy = vUv - uvOffsets.y * dx + uvOffsets.x * dy;
+        col += texture(u_texture, offsetUV, _Bias);
+        col *= 0.25;
+
+        vec3 textureSample = col.rgb;
+#else
+        vec3 textureSample = texture2D( u_texture, vUv ).rgb;
+#endif
+
 		float sigDist = median( textureSample.r, textureSample.g, textureSample.b ) - 0.5;
 		float alpha = clamp( sigDist / fwidth( sigDist ) + 0.5, 0.0, 1.0 );
 		alpha = min( alpha, u_opacity );
