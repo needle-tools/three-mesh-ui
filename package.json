@@ -75,5 +75,9 @@
   },
   "peerDependencies": {
     "three": ">= 0.132.1 < 0.149.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
   }
 }
