@@ -1,6 +1,6 @@
 {
   "name": "@needle-tools/three-mesh-ui",
-  "version": "7.1.5-alpha",
+  "version": "7.1.5-alpha.1",
   "description": "a library on top of three.js to help in creating 3D user interfaces",
   "engines": {
     "node": "x.x.x"
@@ -74,7 +74,7 @@
     "webpack-dev-server": "^4.7.4"
   },
   "peerDependencies": {
-    "three": ">= 0.132.1 < 0.153.x"
+    "three": ">= 0.132.1 <= 0.153.x"
   },
   "publishConfig": {
     "access": "public",
