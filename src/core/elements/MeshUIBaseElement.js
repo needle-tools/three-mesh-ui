@@ -53,7 +53,6 @@ import { uniformOrUserDataTransformer } from '../../utils/mediator/transformers/
 import { Color, Texture, Vector4, Mesh, Material, ShaderMaterial } from 'three';
 import BaseProperty from './../properties/BaseProperty';
 import FontFamily from '../../font/FontFamily';
-import { defaultOptions } from 'acorn';
 import { renderOrderTransformer } from '../../utils/mediator/transformers/MeshTransformers';
 /* eslint-enable no-unused-vars */
 
