@@ -1,6 +1,6 @@
 {
   "name": "@needle-tools/three-mesh-ui",
-  "version": "7.1.5-alpha.3",
+  "version": "7.1.5-alpha.4",
   "description": "a library on top of three.js to help in creating 3D user interfaces",
   "engines": {
     "node": "x.x.x"
@@ -51,7 +51,7 @@
     "@babel/eslint-plugin": "^7.17.7",
     "@babel/plugin-proposal-class-properties": "^7.18.6",
     "@babel/preset-env": "^7.16.11",
-    "@types/three": "^0.136.1",
+    "@types/three": "^0.160.0",
     "acorn": "^8.7.0",
     "chai": "^4.3.6",
     "copy-webpack-plugin": "^10.2.4",
@@ -75,7 +75,7 @@
     "webpack-dev-server": "^4.7.4"
   },
   "peerDependencies": {
-    "three": ">= 0.132.1 <= 0.154.x"
+    "three": ">= 0.132.1 <= 0.161.x"
   },
   "publishConfig": {
     "access": "public",
