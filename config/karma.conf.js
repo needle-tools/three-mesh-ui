@@ -9,8 +9,8 @@ module.exports = function ( config ) {
 	config.set( {
 		frameworks: [ 'mocha', 'chai' ],
 		files: [
-			"./node_modules/three/build/three.min.js",
-			{ pattern: "./build/three-mesh-ui.js", watched: true },
+			{ pattern: "./node_modules/three/build/three.module.js", type: "module" },
+			{ pattern: "./build/three-mesh-ui.module.js", watched: true, type: "module" },
 			{ pattern: './examples/assets/**', included: false, served: true },
 			{ pattern: specFiles, watched: true, type: "module" },
 			{ pattern: './tests/utils/**/*.js', watched: true, included: false },
