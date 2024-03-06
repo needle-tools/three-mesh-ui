@@ -1,5 +1,5 @@
 import BaseProperty from '../BaseProperty';
-import { mergeBufferGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils';
+import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils';
 import { Mesh } from 'three';
 
 export default class RendererPropertyInline extends BaseProperty{
@@ -22,7 +22,7 @@ export default class RendererPropertyInline extends BaseProperty{
 
 			);
 
-			const mergedGeom = mergeBufferGeometries( charactersAsGeometries );
+			const mergedGeom = mergeGeometries( charactersAsGeometries );
 
 			element.setFontMesh( new Mesh( mergedGeom, element.fontMaterial) );
 

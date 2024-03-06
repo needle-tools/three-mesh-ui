@@ -82,7 +82,7 @@ export default class CSSQuerySegment {
 					return target.tagName === condition.value;
 
 				case "attribute":
-					return target.attributes.matchEvery( condition.value );
+					return target.attributes?.matchEvery( condition.value ) ?? false;
 
 				default:
 					console.warn(`CSSQuerySegment::match() - '${condition.type}' is not implemented!`);
