@@ -1,6 +1,6 @@
 {
   "name": "@needle-tools/three-mesh-ui",
-  "version": "7.1.5-alpha.4",
+  "version": "7.1.5-alpha.5",
   "description": "a library on top of three.js to help in creating 3D user interfaces",
   "engines": {
     "node": "x.x.x"
